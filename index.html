@@ -10,7 +10,83 @@
 </head>
 
 <body>
-   
+    <div class="slider">
+        <!--图片容器-->
+        <ul>
+            <li><a href="#"><img src="./images/1.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./images/2.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./images/3.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./images/4.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./images/5.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./images/6.jpg" alt=""></a></li>
+        </ul>
+        <!--箭头-->
+        <div class="arrow">
+            <span class="arrow-left">&lt;</span>
+            <span class="arrow-right">&gt;</span>
+        </div>
+    </div>
+    <div class="aud">
+        <audio src="./audio/等什么君 - 归寻.flac" controls="controls" autoplay loop></audio>
+    </div>
+    <script src="./js/jquery-1.12.4.js"></script>
+    <script>
+        //入口函数
+        $(function () {
+            //鼠标移入事件
+            $('.slider').on({
+                mouseenter: function () {
+                    $('.arrow').show();
+                    clearInterval(times)
+                }
+            });
+            $('.slider').on({
+                mouseleave: function () {
+                    $('.arrow').hide();
+                    times = setInterval(moveRight, 2000)
+                }
+            });
+            //克隆第一个Li标签内容
+            $('.slider>ul').append($('.slider>ul>li:eq(0)').clone())
+            //设置一个右点击事件
+            $('.arrow-right').on('click', moveRight)
+            $('.arrow-left').on('click', moveLeft)
+            //设置一个计时器
+            let times = null;
+            times = setInterval(moveRight, 2000)
+
+
+
+
+
+
+            //声明一个变量记录点击次数
+            let index = 0;
+            function moveRight() {
+                if (index == 6) {
+                    index = 0;
+                    $('.slider>ul').css('left', 0)
+                };
+                index++;
+                let boxRight = index * $('.slider>ul>li').width()
+                $('.slider>ul').stop(true, false).animate({
+                    left: -boxRight
+                }, 1000);
+            };
+
+            function moveLeft() {
+                if (index == 0) {
+                    index = 6;
+                    $('.slider>ul').css('left', -(index * $('.slider>ul>li').width()))
+                };
+                index--;
+                let boxLeft = index * $('.slider').width();
+                $('.slider>ul').stop(true, false).animate({
+                    left: -boxLeft
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 
 </html>
